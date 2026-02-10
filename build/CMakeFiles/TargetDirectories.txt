@@ -1,0 +1,16 @@
+/home/enot/glgame/build/CMakeFiles/Enot.dir
+/home/enot/glgame/build/CMakeFiles/edit_cache.dir
+/home/enot/glgame/build/CMakeFiles/rebuild_cache.dir
+/home/enot/glgame/build/external/glfw3/CMakeFiles/edit_cache.dir
+/home/enot/glgame/build/external/glfw3/CMakeFiles/rebuild_cache.dir
+/home/enot/glgame/build/external/glfw3/src/CMakeFiles/glfw.dir
+/home/enot/glgame/build/external/glfw3/src/CMakeFiles/update_mappings.dir
+/home/enot/glgame/build/external/glfw3/src/CMakeFiles/edit_cache.dir
+/home/enot/glgame/build/external/glfw3/src/CMakeFiles/rebuild_cache.dir
+/home/enot/glgame/build/external/glad/CMakeFiles/glad.dir
+/home/enot/glgame/build/external/glad/CMakeFiles/edit_cache.dir
+/home/enot/glgame/build/external/glad/CMakeFiles/rebuild_cache.dir
+/home/enot/glgame/build/external/glm/CMakeFiles/edit_cache.dir
+/home/enot/glgame/build/external/glm/CMakeFiles/rebuild_cache.dir
+/home/enot/glgame/build/external/glm/glm/CMakeFiles/edit_cache.dir
+/home/enot/glgame/build/external/glm/glm/CMakeFiles/rebuild_cache.dir

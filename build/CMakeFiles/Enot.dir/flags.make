@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/enot/glgame -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..
+CXX_INCLUDES = -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..
 
 CXX_FLAGS = 
 

@@ -1,18 +1,24 @@
-#ifdef TEXT_H
+#ifndef TEXT_H
 #define TEXT_H
 
-extern float textQuadVertices[];
-
-extern std::map<char, Character> Characters;
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <map>
+#include <string>        // ← Добавил
+#include <glm/glm.hpp>
 
 struct Character {
-    unsigned int texture; // ID текстуры глифа
-    glm::ivec2   size;    // ширина/высота
-    glm::ivec2   bearing; // позиционный сдвиг
-    unsigned int advance; // горизонтальный шаг до следующего символа
+    GLuint TextureID;
+    glm::ivec2 Size;
+    glm::ivec2 Bearing;
+    GLuint Advance;
 };
 
-void InitText(const char* font_path = "font.otf", int font_size = 48);
-void RenderText(const std::string& text, float x, float y, float scale = 1.0f);
+extern std::map<GLchar, Character> Characters;
+extern GLuint textVAO, textVBO;
+
+void SetupTextBuffers();
+void InitText(int font_size);
+void RenderText(unsigned int &shader, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
 
 #endif

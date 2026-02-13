@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <string>
 
 #include "shader.h"
 
@@ -53,11 +54,11 @@ std::string GetShaderCode(const char* path)
     return Code;
 }
 
-unsigned int CreateShader()
+unsigned int CreateShader(const char* vs,const char* fs)
 {
     //get code
-    std::string vertexCode = GetShaderCode("./shaders/Vert.glsl");
-    std::string fragmentCode = GetShaderCode("./shaders/Frag.glsl");
+    std::string vertexCode = GetShaderCode(vs);
+    std::string fragmentCode = GetShaderCode(fs);
 
     //создание шейдеров
     unsigned int vertexShader = CreateOnlyShader(vertexCode,GL_VERTEX_SHADER);

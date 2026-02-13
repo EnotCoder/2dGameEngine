@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-unsigned int CreateShader();
+unsigned int CreateShader(const char* vs,const char* fs);
 std::string GetShaderCode(const char* path);
 unsigned int CreateOnlyShader(std::string code,unsigned int shaderType);
 

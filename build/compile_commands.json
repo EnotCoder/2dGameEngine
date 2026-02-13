@@ -1,39 +1,45 @@
 [
 {
   "directory": "/home/enot/glgame/build",
-  "command": "/usr/bin/c++  -I/home/enot/glgame -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/main.cpp.o -c /home/enot/glgame/main.cpp",
+  "command": "/usr/bin/c++  -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/main.cpp.o -c /home/enot/glgame/main.cpp",
   "file": "/home/enot/glgame/main.cpp",
   "output": "CMakeFiles/Enot.dir/main.cpp.o"
 },
 {
   "directory": "/home/enot/glgame/build",
-  "command": "/usr/bin/c++  -I/home/enot/glgame -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/rect/rect.cpp.o -c /home/enot/glgame/rect/rect.cpp",
+  "command": "/usr/bin/c++  -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/rect/rect.cpp.o -c /home/enot/glgame/rect/rect.cpp",
   "file": "/home/enot/glgame/rect/rect.cpp",
   "output": "CMakeFiles/Enot.dir/rect/rect.cpp.o"
 },
 {
   "directory": "/home/enot/glgame/build",
-  "command": "/usr/bin/c++  -I/home/enot/glgame -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/shader/shader.cpp.o -c /home/enot/glgame/shader/shader.cpp",
+  "command": "/usr/bin/c++  -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/shader/shader.cpp.o -c /home/enot/glgame/shader/shader.cpp",
   "file": "/home/enot/glgame/shader/shader.cpp",
   "output": "CMakeFiles/Enot.dir/shader/shader.cpp.o"
 },
 {
   "directory": "/home/enot/glgame/build",
-  "command": "/usr/bin/c++  -I/home/enot/glgame -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/player/player.cpp.o -c /home/enot/glgame/player/player.cpp",
+  "command": "/usr/bin/c++  -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/player/player.cpp.o -c /home/enot/glgame/player/player.cpp",
   "file": "/home/enot/glgame/player/player.cpp",
   "output": "CMakeFiles/Enot.dir/player/player.cpp.o"
 },
 {
   "directory": "/home/enot/glgame/build",
-  "command": "/usr/bin/c++  -I/home/enot/glgame -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/animSprite/anim.cpp.o -c /home/enot/glgame/animSprite/anim.cpp",
+  "command": "/usr/bin/c++  -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/animSprite/anim.cpp.o -c /home/enot/glgame/animSprite/anim.cpp",
   "file": "/home/enot/glgame/animSprite/anim.cpp",
   "output": "CMakeFiles/Enot.dir/animSprite/anim.cpp.o"
 },
 {
   "directory": "/home/enot/glgame/build",
-  "command": "/usr/bin/c++  -I/home/enot/glgame -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/spriteClass/sprite.cpp.o -c /home/enot/glgame/spriteClass/sprite.cpp",
+  "command": "/usr/bin/c++  -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/spriteClass/sprite.cpp.o -c /home/enot/glgame/spriteClass/sprite.cpp",
   "file": "/home/enot/glgame/spriteClass/sprite.cpp",
   "output": "CMakeFiles/Enot.dir/spriteClass/sprite.cpp.o"
+},
+{
+  "directory": "/home/enot/glgame/build",
+  "command": "/usr/bin/c++  -I/home/enot/glgame -I/usr/include/freetype2 -I/home/enot/glgame/external/glfw3/include -I/home/enot/glgame/external/glad/include -I/home/enot/glgame/external/glm/glm/..  -o CMakeFiles/Enot.dir/text/text.cpp.o -c /home/enot/glgame/text/text.cpp",
+  "file": "/home/enot/glgame/text/text.cpp",
+  "output": "CMakeFiles/Enot.dir/text/text.cpp.o"
 },
 {
   "directory": "/home/enot/glgame/build/external/glfw3/src",

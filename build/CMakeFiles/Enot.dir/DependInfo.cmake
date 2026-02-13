@@ -14,6 +14,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/enot/glgame/rect/rect.cpp" "CMakeFiles/Enot.dir/rect/rect.cpp.o" "gcc" "CMakeFiles/Enot.dir/rect/rect.cpp.o.d"
   "/home/enot/glgame/shader/shader.cpp" "CMakeFiles/Enot.dir/shader/shader.cpp.o" "gcc" "CMakeFiles/Enot.dir/shader/shader.cpp.o.d"
   "/home/enot/glgame/spriteClass/sprite.cpp" "CMakeFiles/Enot.dir/spriteClass/sprite.cpp.o" "gcc" "CMakeFiles/Enot.dir/spriteClass/sprite.cpp.o.d"
+  "/home/enot/glgame/text/text.cpp" "CMakeFiles/Enot.dir/text/text.cpp.o" "gcc" "CMakeFiles/Enot.dir/text/text.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -16,6 +16,7 @@
 #include "animSprite/anim.h"
 #include <random>
 #include "spriteClass/sprite.h"
+#include "text/text.h"
 
 float vert[] = {
     -0.5f,  0.5f,  0.0f,  0.0f, 0.0f,
@@ -90,11 +91,16 @@ int main()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(frag), frag, GL_STATIC_DRAW);
     
 
-    shaderProgram = CreateShader();
+    shaderProgram = CreateShader("./shaders/Vert.glsl", "./shaders/Frag.glsl");
     glUseProgram(shaderProgram);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    SetupTextBuffers();
+    unsigned int textShader = CreateShader("./shaders/textVert.glsl", "./shaders/textFrag.glsl");
+    InitText(20);
+
 
     initUniforms();
 
@@ -140,6 +146,8 @@ int main()
 
     Sprite tubesUp[] = {tube4, tube5, tube6};
 
+    int store = 0;
+
     //while
     float lastTime = glfwGetTime();
     while (!glfwWindowShouldClose(window))
@@ -178,7 +186,7 @@ int main()
         {   
             float &tubePosX = tubesUp[i].position.x;
             float &tubePosY = tubesUp[i].position.y;
-            if (tubePosX > -2.0f) {if (bird.active) tubePosX -= 0.02f;} else {tubePosX = 2.5f;tubePosY = getRandomDouble(1.0,1.35);}
+            if (tubePosX > -2.0f) {if (bird.active) tubePosX -= 0.02f;} else {tubePosX = 2.5f;tubePosY = getRandomDouble(1.0,1.35);store+=1;}
             tubesUp[i].draw();
         }
 
@@ -186,7 +194,14 @@ int main()
         bird.move(window,deltaTime);
 
         //stars
-        star.play(deltaTime, glm::vec2(0.2), glm::vec2(0.0), 0, false);
+        //star.play(deltaTime, glm::vec2(0.2), glm::vec2(0.0), 0, false);
+
+        glUseProgram(textShader);
+        glm::mat4 projection = glm::ortho(0.0f, 1200.0f, 800.0f, 0.0f);
+        glUniformMatrix4fv(glGetUniformLocation(textShader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        RenderText(textShader, "Store: " + std::to_string(store), 50.0f, 700.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+        glUseProgram(shaderProgram);
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -1,137 +1,128 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <map>
-#include <string>
-
-#define GLEW_STATIC
-#define FREEGLUT_STATIC
-// Для FreeType:
-extern "C" {
+#include "text.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <iostream>
+
+#include <glm/gtc/matrix_transform.hpp>  // ← ortho()
+#include <glm/gtc/type_ptr.hpp>          // ← value_ptr()
+
+std::map<GLchar, Character> Characters;
+GLuint textVAO, textVBO;  // Определение
+
+void SetupTextBuffers() {
+    glGenVertexArrays(1, &textVAO);
+    glGenBuffers(1, &textVBO);
+    
+    glBindVertexArray(textVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+    
+    float vertices[6][4] = {
+        { 0.0f, 1.0f, 0.0f, 0.0f },
+        { 0.0f, 0.0f, 0.0f, 1.0f },
+        { 1.0f, 0.0f, 1.0f, 1.0f },
+        { 0.0f, 1.0f, 0.0f, 0.0f },
+        { 1.0f, 0.0f, 1.0f, 1.0f },
+        { 1.0f, 1.0f, 1.0f, 0.0f }
+    };
+    
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+    
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
-float textQuadVertices[] = {
-    0.0f,  0.0f,  0.0f,
-    0.0f,  1.0f,  0.0f,
-    1.0f,  1.0f,  0.0f,
-
-    0.0f,  0.0f,  0.0f,
-    1.0f,  1.0f,  0.0f,
-    1.0f,  0.0f,  0.0f
-};
-
-
-std::map<char, Character> Characters;
-
-// Инициализировать шрифт
-void InitText(const char* font_path = "font.otf", int font_size = 48) {
-    FT_Library ft; //иницилизация freeType
-    if (FT_Init_FreeType(&ft)) { //проверка иницилизации
-        fprintf(stderr, "ERROR::FREETYPE: Can't init FreeType Library\n");
+void InitText(int font_size) {
+    FT_Library ft;
+    if (FT_Init_FreeType(&ft)) {
+        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
         return;
     }
 
-    FT_Face face;//переменная которая хранит шрифт
-    if (FT_New_Face(ft, font_path, 0, &face)) { //загружаем шрифт и проверяет загрузился ли
-        fprintf(stderr, "ERROR::FREETYPE: Failed to load font\n");
+    FT_Face face;
+    if (FT_New_Face(ft, "./font.ttf", 0, &face)) {
+        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+        FT_Done_FreeType(ft);
         return;
     }
 
-    FT_Set_Pixel_Sizes(face, 0, font_size); // размер шрифта в пикселях
+    FT_Set_Pixel_Sizes(face, 0, 48);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    for (unsigned char c = 32; c < 127; c++) { // Цикл по ASCII символам от пробела (32) до ~ (126)
-
-        if (FT_Load_Char(face, c, FT_LOAD_RENDER)) { // загружаем опр символ
-            fprintf(stderr, "ERROR::FREETYPE: Failed to load glyph %c\n", c);
+    for (GLubyte c = 0; c < 128; c++) {
+        if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
+            std::cout << "ERROR::FREETYPE: Failed to load Glyph " << c << std::endl;
             continue;
         }
 
-        //создание Opengl Texture
-
-        unsigned int texture;
+        GLuint texture;
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
-        glTexImage2D(
-            GL_TEXTURE_2D,
-            0,
-            GL_RED,
-            face->glyph->bitmap.width,
-            face->glyph->bitmap.rows,
-            0,
-            GL_RED,
-            GL_UNSIGNED_BYTE,
-            face->glyph->bitmap.buffer
-        );
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, 
+                     face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 
-        // Настройка обертки текстуры — не растягивать за края
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        // Сглаживание — GL_LINEAR = плавные края при масштабировании
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        Character ch = {
+        Character character = {
             texture,
             glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
             glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-            static_cast<unsigned int>(face->glyph->advance.x)
+            static_cast<GLuint>(face->glyph->advance.x)
         };
-
-        Characters[c] = ch; // добавляем символ
+        Characters[c] = character;
     }
 
-    FT_Done_Face(face); // освобождение памяти freetype
+    FT_Done_Face(face);
     FT_Done_FreeType(ft);
-
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);// убирает padding между строками
 }
 
+void RenderText(unsigned int &s, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color) {
+    glUseProgram(s);
 
-void RenderText(const std::string& text, float x, float y, float scale = 1.0f) {
-    glUseProgram(textShaderProgram);  // ваш текст‑программ
+    glm::mat4 projection = glm::ortho(0.0f, 1200.0f, 0.0f, 800.0f);  // Размер окна!
+    glUniformMatrix4fv(glGetUniformLocation(s, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    
+    glUniform3f(glGetUniformLocation(s, "textColor"), color.x, color.y, color.z);
 
-    glm::mat4 proj = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f); // под размер окна
-    glUniformMatrix4fv(glGetUniformLocation(textShaderProgram, "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+    glUniform3f(glGetUniformLocation(s, "textColor"), color.x, color.y, color.z);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(textVAO);  // ✅ textVAO вместо VAO
 
-    vec4 color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    glUniform4fv(glGetUniformLocation(textShaderProgram, "textColor"), 1, glm::value_ptr(color));
+    std::string::const_iterator c;
+    for (c = text.begin(); c != text.end(); ++c) {
+        Character ch = Characters[*c];
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBindVertexArray(VAO); // VAO с текстурой и координатами
+        GLfloat xpos = x + ch.Bearing.x * scale;
+        GLfloat ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
+        GLfloat w = ch.Size.x * scale;
+        GLfloat h = ch.Size.y * scale;
 
-    for (char c : text) {
-        Character ch = Characters[c];
-
-        float xpos = x + ch.bearing.x * scale;
-        float ypos = y - (ch.size.y - ch.bearing.y) * scale;
-
-        float w = ch.size.x * scale;
-        float h = ch.size.y * scale;
-
-        // обновление вершин (или заранее генерировать матрицу)
-        float vertices[6 * 4] = {
-            xpos,     ypos + h,  0.0, 0.0,
-            xpos,     ypos,      0.0, 1.0,
-            xpos + w, ypos,      1.0, 1.0,
-
-            xpos,     ypos + h,  0.0, 0.0,
-            xpos + w, ypos,      1.0, 1.0,
-            xpos + w, ypos + h,  1.0, 0.0
+        GLfloat vertices[6][4] = {
+            { xpos, ypos + h, 0.0, 0.0 },
+            { xpos, ypos,      0.0, 1.0 },
+            { xpos + w, ypos,  1.0, 1.0 },
+            { xpos, ypos + h, 0.0, 0.0 },
+            { xpos + w, ypos,  1.0, 1.0 },
+            { xpos + w, ypos + h, 1.0, 0.0 }
         };
 
-        glBindTexture(GL_TEXTURE_2D, ch.texture);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+        glBindBuffer(GL_ARRAY_BUFFER, textVBO);  // ✅ textVBO вместо VBO
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
         glDrawArrays(GL_TRIANGLES, 0, 6);
-
-        x += (ch.advance >> 6) * scale; // шагнуть по горизонтали
+        x += (ch.Advance >> 6) * scale;
     }
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_BLEND);
 }

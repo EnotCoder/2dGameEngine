@@ -312,6 +312,30 @@ spriteClass/sprite.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Enot.dir/build.make CMakeFiles/Enot.dir/spriteClass/sprite.cpp.s
 .PHONY : spriteClass/sprite.cpp.s
 
+text/text.o: text/text.cpp.o
+.PHONY : text/text.o
+
+# target to build an object file
+text/text.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Enot.dir/build.make CMakeFiles/Enot.dir/text/text.cpp.o
+.PHONY : text/text.cpp.o
+
+text/text.i: text/text.cpp.i
+.PHONY : text/text.i
+
+# target to preprocess a source file
+text/text.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Enot.dir/build.make CMakeFiles/Enot.dir/text/text.cpp.i
+.PHONY : text/text.cpp.i
+
+text/text.s: text/text.cpp.s
+.PHONY : text/text.s
+
+# target to generate assembly for a file
+text/text.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Enot.dir/build.make CMakeFiles/Enot.dir/text/text.cpp.s
+.PHONY : text/text.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -342,6 +366,9 @@ help:
 	@echo "... spriteClass/sprite.o"
 	@echo "... spriteClass/sprite.i"
 	@echo "... spriteClass/sprite.s"
+	@echo "... text/text.o"
+	@echo "... text/text.i"
+	@echo "... text/text.s"
 .PHONY : help
 
 
